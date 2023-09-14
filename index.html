@@ -5,58 +5,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Color Palette Generator</title>
 
-		<style>
-			* {
-				flex-shrink: 0;
-			}
-
-			.category {
-				margin: 1.3rem;
-				display: flex;
-				align-items: center;
-			}
-
-			.color {
-				width: 8rem;
-				height: 8rem;
-				border-radius: 2rem;
-				position: relative;
-			}
-
-			.color.inner {
-				width: 4rem;
-				height: 4rem;
-				border-radius: 1rem;
-				position: absolute;
-				right: 2rem;
-				top: 2rem;
-			}
-
-			.colText {
-				margin: 0 1.5rem 0 0.8rem;
-				width: 200px;
-			}
-
-			.inputRows {
-				display: flex;
-				align-items: center;
-				margin: 0.5rem;
-			}
-
-			label {
-				width: 150px;
-				text-align: end;
-				margin: 0 0.5rem 0 0;
-			}
-
-			input[type='range'] {
-				width: 10rem;
-			}
-
-			input[type='number'] {
-				width: 2.5rem;
-			}
-		</style>
+		<link rel="stylesheet" href="style.css" />
 	</head>
 	<body>
 		<h3>Choose parameters:</h3>
@@ -75,88 +24,20 @@
 			<label>Lightness offset: </label><input id="offsetLightInput" type="range" min="-100" max="100" value="-25" />
 		</div>
 
-		<div class="category" style="align-items: end">
-			<div class="color"></div>
-			<p class="colText">Base color</p>
-			<div class="color"></div>
-			<p class="colText">Offset color</p>
-			<p class="color" style="height: unset; text-align: center; width: 12rem; margin: 0">Exemple</p>
+		<div class='header'>
+			<div class="category">
+				<div class="color"></div>
+				<p class="colText">Base color</p>
+
+				<div class="color"></div>
+				<p class="colText">Offset color</p>
+
+				<p class="color example">Exemple</p>
+			</div>
 		</div>
+
 		<div id="root"></div>
 
-		<script>
-			const root = document.getElementById('root');
-
-			const inputs = {
-				nOfColorsInput: document.getElementById('nOfColorsInput'),
-				baseHueInput: document.getElementById('baseHueInput'),
-				baseSatInput: document.getElementById('baseSatInput'),
-				offsetSatInput: document.getElementById('offsetSatInput'),
-				baseLightInput: document.getElementById('baseLightInput'),
-				offsetLightInput: document.getElementById('offsetLightInput'),
-			};
-
-			const fit = (nbr) => {
-				if (nbr > 100) return 100;
-				if (nbr < 0) return 0;
-				return nbr;
-			};
-
-			const generateColors = () => {
-				const nOfColors = parseInt(inputs.nOfColorsInput.value);
-				const hueDistance = parseInt(360 / nOfColors);
-				let baseHue = parseInt(inputs.baseHueInput.value) % 360;
-				baseHue = baseHue < 0 ? 360 + baseHue : baseHue;
-				const baseSat = parseInt(inputs.baseSatInput.value);
-				console.log(baseSat);
-				const offsetSat = parseInt(inputs.offsetSatInput.value);
-				const baseLight = parseInt(inputs.baseLightInput.value);
-				const offsetLight = parseInt(inputs.offsetLightInput.value);
-
-				root.innerHTML = '';
-				for (let i = 0; i < nOfColors; i++) {
-					const baseColor = `hsl(${(hueDistance * i + baseHue) % 360}, ${fit(baseSat)}%, ${fit(baseLight)}%)`;
-					const offsetColor = `hsl(${(hueDistance * i + baseHue) % 360}, ${fit(baseSat + offsetSat)}%, ${fit(baseLight + offsetLight)}%)`;
-					root.insertAdjacentHTML(
-						'beforeend',
-						`
-							<div class="category">
-								<div class="color" style="background: ${baseColor}"></div>
-								<p class="colText">${baseColor}</p>
-
-								<div class="color" style="background: ${offsetColor}"></div>
-								<p class="colText">${offsetColor}</p>
-
-								<div class="color" style="background: ${baseColor}; width: 12rem; border-radius: 0">
-									<div class="color inner" style="background: ${offsetColor}"></div>
-								</div>
-							</div>
-						`
-					);
-				}
-			};
-
-			for (const id in inputs) {
-				const inputNumber = inputs[id].cloneNode();
-				inputNumber.type = 'number';
-				inputNumber.id += 'Nbr';
-				inputNumber.addEventListener('input', () => {
-					if (inputNumber.value > inputNumber.max) inputNumber.value = inputNumber.max;
-					if (inputNumber.value < inputNumber.min) inputNumber.value = inputNumber.min;
-					inputNumber.value = parseInt(inputNumber.value);
-
-					inputs[id].value = inputNumber.value;
-					generateColors();
-				});
-				inputs[id].addEventListener('input', () => {
-					inputNumber.value = inputs[id].value;
-					generateColors();
-				});
-
-				inputs[id].insertAdjacentElement('afterend', inputNumber);
-			}
-
-			generateColors();
-		</script>
+		<script src="index.js"></script>
 	</body>
 </html>

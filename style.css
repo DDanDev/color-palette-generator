@@ -1,0 +1,67 @@
+* {
+	flex-shrink: 0;
+}
+
+.category {
+	padding: 1.3rem;
+	display: flex;
+	align-items: center;
+	width: fit-content;
+}
+
+.color {
+	width: 8rem;
+	height: 8rem;
+	border-radius: 2rem;
+	position: relative;
+}
+
+.color.inner {
+	width: 4rem;
+	height: 4rem;
+	border-radius: 1rem;
+	position: absolute;
+	right: 2rem;
+	top: 2rem;
+}
+
+.color.example {
+	width: 12rem;
+	border-radius: 0;
+}
+
+.colText {
+	margin: 0 1.5rem 0 0.8rem;
+	width: 12rem;
+}
+
+.inputRows {
+	display: flex;
+	align-items: center;
+	margin: 1rem 0.5rem;
+}
+
+label {
+	width: 11rem;
+	text-align: end;
+	margin: 0 0.5rem 0 0;
+}
+
+input[type='range'] {
+	width: 10rem;
+}
+
+input[type='number'] {
+	width: 2.5rem;
+}
+
+.header .category {
+	align-items: end;
+}
+
+.header .color.example {
+	height: unset;
+	text-align: center;
+	width: 12rem;
+	margin: 0;
+}
